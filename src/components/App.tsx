@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
+import { QuotePrompt } from './QuotePrompt';
+import { TextInput } from './TextInput';
 
 function App() {
   return (
-    <div className="App">
-      <h1>Hola :)</h1>
+    <div>
+      <QuotePrompt></QuotePrompt>
+      <TextInput></TextInput>
     </div>
   );
 }
