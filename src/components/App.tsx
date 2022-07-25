@@ -1,13 +1,26 @@
-import React, { useEffect } from 'react';
-import styled from 'styled-components';
-import { QuotePrompt } from './QuotePrompt';
-import { TextInput } from './TextInput';
+import React, { useEffect, useRef, useState } from 'react';
+import { QuoteBox } from './QuoteBox';
 
-function App() {
+const App = () => {
+  const [quote, setQuote] = useState("");
+  const [userInput, setUserInput] = useState("");
+
+  useEffect(() => {
+    fetch("https://animechan.vercel.app/api/random")
+      .then(response => response.json())
+      .then(quote => {
+        setQuote(quote.quote);
+      })
+  }, [])
+
+  const onUserInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUserInput(e.target.value);
+  }
+
   return (
     <div>
-      <QuotePrompt></QuotePrompt>
-      <TextInput></TextInput>
+      <QuoteBox quote={quote} userInput={userInput}></QuoteBox>
+      <input type="text" value={userInput} onChange={onUserInput}></input>
     </div>
   );
 }
