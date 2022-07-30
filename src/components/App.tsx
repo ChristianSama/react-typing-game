@@ -1,16 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { QuoteBox } from './QuoteBox';
+import { getQuote } from '../services/QuoteService';
 
 const App = () => {
   const [quote, setQuote] = useState("");
   const [userInput, setUserInput] = useState("");
 
   useEffect(() => {
-    fetch("https://animechan.vercel.app/api/random")
-      .then(response => response.json())
-      .then(quote => {
-        setQuote(quote.quote);
-      })
+    const fetchData = async () => {
+      const result = await getQuote()
+      setQuote(result.quote);
+    }
+    fetchData();
   }, [])
 
   const onUserInput = (e: React.ChangeEvent<HTMLInputElement>) => {
