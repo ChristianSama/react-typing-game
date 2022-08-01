@@ -8,7 +8,13 @@ const RedSpan = styled.span`
   background-color: red;
 `;
 
-export const QuoteBox = (props: { quote: string; userInput: string }) => {
+const StyledQuoteBox = styled(StyledBox)`
+  &:focus {
+    border: solid 1px gray;
+  }
+`
+
+export const QuoteBox = (props: { quote: string; userInput: string; onQuoteClick: () => void }) => {
   let chars;
 
   chars = props.quote.split("").map((char, i) => {
@@ -21,5 +27,5 @@ export const QuoteBox = (props: { quote: string; userInput: string }) => {
     return <RedSpan key={i}>{char}</RedSpan>;
   });
 
-  return <StyledBox>{chars}</StyledBox>;
+  return <StyledQuoteBox onClick={props.onQuoteClick}>{chars}</StyledQuoteBox>;
 };
