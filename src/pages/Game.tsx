@@ -46,7 +46,7 @@ export const Game = () => {
   return (
     <div>
       <QuoteBox onQuoteClick={onQuoteClick} quote={quote.quote} userInput={userInput}></QuoteBox>
-      <HiddenInput type="text" ref={hiddenInput} value={userInput} onChange={onUserInput}></HiddenInput>
+      <HiddenInput type="text" autoFocus ref={hiddenInput} value={userInput} onChange={onUserInput}></HiddenInput>
       {userInput == quote.quote && quote.quote != "" && (
         <Results quote={quote}></Results>
       )}
