@@ -12,13 +12,13 @@ const IncorrectSpan = styled(DefaultSpan)`
   color: red;
   text-decoration: underline;
 `;
-const Cursor = styled(DefaultSpan)`
+const Cursor = styled.span`
   display: inline-block;
   position: absolute;
   left: -3px;
   width: 3px;
   height: 1.2rem;
-  background-color: #76ffef
+  background-color: #76ffef;
 `;
 
 export const QuoteBox = (props: {

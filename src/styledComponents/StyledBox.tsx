@@ -7,4 +7,6 @@ export const StyledBox = styled.div`
   padding: 1rem;
   color: gray;
   box-shadow: 5px 5px 15px #d4d4d4;
+  overflow-wrap: break-word; /**/
+  white-space: pre-wrap; /*Makes spaces visible*/
 `;

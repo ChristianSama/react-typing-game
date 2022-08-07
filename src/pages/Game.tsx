@@ -4,13 +4,14 @@ import { getQuote } from "../services/QuoteService";
 import { QuoteBox } from "../components/QuoteBox";
 import { Results } from "../components/Results";
 import styled from "styled-components";
+import { NewGameButton } from "../components/NewGameButton";
 
 const HiddenInput = styled.input.attrs({
-  type: "text"
+  type: "text",
 })`
   opacity: 0;
   filter: alpha(opacity=0);
-`
+`;
 
 export const Game = () => {
   const [quote, setQuote] = useState<QuoteData>({
@@ -24,32 +25,49 @@ export const Game = () => {
 
   const hiddenInput = useRef<HTMLInputElement>(null);
 
+  const fetchData = async () => {
+    const result = await getQuote();
+    setQuote(result);
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      const result = await getQuote();
-      setQuote(result);
-    };
     fetchData();
   }, []);
 
   const onQuoteClick = () => {
-    const currentEl = hiddenInput.current;
-    if (currentEl) {
-      hiddenInput.current.focus();
-    }
-  }
+    hiddenInput.current.focus();
+  };
 
   const onUserInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserInput(e.target.value);
   };
 
+  const newGame = async () => {
+    setUserInput("");
+    await fetchData();
+    hiddenInput.current.focus();
+  }
+
   return (
     <div>
-      <QuoteBox onQuoteClick={onQuoteClick} quote={quote.quote} userInput={userInput}></QuoteBox>
-      <HiddenInput type="text" autoFocus ref={hiddenInput} value={userInput} onChange={onUserInput}></HiddenInput>
+      <QuoteBox
+        onQuoteClick={onQuoteClick}
+        quote={quote.quote}
+        userInput={userInput}
+      ></QuoteBox>
+      <HiddenInput
+        type="text"
+        autoFocus
+        ref={hiddenInput}
+        value={userInput}
+        onChange={onUserInput}
+      ></HiddenInput>
       {userInput == quote.quote && quote.quote != "" && (
-        <Results quote={quote}></Results>
+        <>
+          <Results quote={quote}></Results>
+        </>
       )}
+      <NewGameButton newGame={newGame}></NewGameButton>
     </div>
   );
 };
