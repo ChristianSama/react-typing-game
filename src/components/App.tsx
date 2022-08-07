@@ -4,12 +4,14 @@ import { Results } from "./Results";
 import { Home } from "../pages/Home";
 import { Route, Routes } from "react-router-dom";
 import { Game } from "../pages/Game";
+import { NavBar } from "./NavBar";
 
 const App = () => {
   return (
     <div>
       <GlobalStyle />
       <div>
+        <NavBar/>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/game" element={<Game />} />

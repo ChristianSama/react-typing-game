@@ -5,11 +5,12 @@ const DefaultSpan = styled.span`
   position: relative;
   color: #cccccc;
 `;
-const GreenSpan = styled(DefaultSpan)`
+const CorrectSpan = styled(DefaultSpan)`
   color: #404040;
 `;
-const RedSpan = styled(DefaultSpan)`
+const IncorrectSpan = styled(DefaultSpan)`
   color: red;
+  text-decoration: underline;
 `;
 const Cursor = styled(DefaultSpan)`
   display: inline-block;
@@ -40,9 +41,9 @@ export const QuoteBox = (props: {
       return <DefaultSpan key={i}>{char}</DefaultSpan>;
     }
     if (props.userInput[i] == char) {
-      return <GreenSpan key={i}>{char}</GreenSpan>;
+      return <CorrectSpan key={i}>{char}</CorrectSpan>;
     }
-    return <RedSpan key={i}>{char}</RedSpan>;
+    return <IncorrectSpan key={i}>{char}</IncorrectSpan>;
   });
 
   return <StyledBox onClick={props.onQuoteClick}>{chars}</StyledBox>;
