@@ -13,14 +13,16 @@ const HiddenInput = styled.input.attrs({
   filter: alpha(opacity=0);
 `;
 
+const initialQuote = {
+  quote: "",
+  anime: "",
+  character: "",
+  characterUrl: "",
+  characterImage: "",
+}
+
 export const Game = () => {
-  const [quote, setQuote] = useState<QuoteData>({
-    quote: "",
-    anime: "",
-    character: "",
-    characterUrl: "",
-    characterImage: "",
-  });
+  const [quote, setQuote] = useState<QuoteData>(initialQuote);
   const [userInput, setUserInput] = useState("");
 
   const hiddenInput = useRef<HTMLInputElement>(null);
@@ -43,6 +45,7 @@ export const Game = () => {
   };
 
   const newGame = async () => {
+    setQuote(initialQuote);
     setUserInput("");
     await fetchData();
     hiddenInput.current.focus();
@@ -50,11 +53,14 @@ export const Game = () => {
 
   return (
     <div>
-      <QuoteBox
-        onQuoteClick={onQuoteClick}
-        quote={quote.quote}
-        userInput={userInput}
-      ></QuoteBox>
+      {quote.quote !== "" 
+        ? <QuoteBox
+          onQuoteClick={onQuoteClick}
+          quote={quote.quote}
+          userInput={userInput}
+        ></QuoteBox>
+        : <p>Loading...</p>
+      }
       <HiddenInput
         type="text"
         autoFocus
