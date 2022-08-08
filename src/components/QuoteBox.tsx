@@ -21,6 +21,7 @@ const Cursor = styled.span`
   background-color: #76ffef;
 `;
 
+// TODO: consider replacing style only instead of returning different components.
 export const QuoteBox = (props: {
   quote: string;
   userInput: string;
@@ -38,12 +39,12 @@ export const QuoteBox = (props: {
       );
     }
     if (props.userInput[i] == undefined) {
-      return <DefaultSpan key={i}>{char}</DefaultSpan>;
+      return <DefaultSpan data-testid="letter" key={i}>{char}</DefaultSpan>;
     }
     if (props.userInput[i] == char) {
-      return <CorrectSpan key={i}>{char}</CorrectSpan>;
+      return <CorrectSpan data-testid="letter" key={i}>{char}</CorrectSpan>;
     }
-    return <IncorrectSpan key={i}>{char}</IncorrectSpan>;
+    return <IncorrectSpan data-testid="letter" key={i}>{char}</IncorrectSpan>;
   });
 
   return <StyledBox onClick={props.onQuoteClick}>{chars}</StyledBox>;
