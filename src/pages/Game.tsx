@@ -21,6 +21,16 @@ const initialQuote = {
   characterImage: "",
 }
 
+const LoadingPrompt = styled.p`
+  font-size: 20px;
+  text-align: center;
+`
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+`
+
 export const Game = () => {
   const [quote, setQuote] = useState<QuoteData>(initialQuote);
   const [userInput, setUserInput] = useState("");
@@ -52,14 +62,14 @@ export const Game = () => {
   }
 
   return (
-    <div>
+    <Container>
       {quote.quote !== "" 
         ? <QuoteBox
           onQuoteClick={onQuoteClick}
           quote={quote.quote}
           userInput={userInput}
         ></QuoteBox>
-        : <p>Loading...</p>
+        : <LoadingPrompt>Loading...</LoadingPrompt>
       }
       <HiddenInput
         type="text"
@@ -74,6 +84,6 @@ export const Game = () => {
         </>
       )}
       <NewGameButton newGame={newGame}></NewGameButton>
-    </div>
+    </Container>
   );
 };
