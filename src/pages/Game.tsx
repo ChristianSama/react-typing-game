@@ -34,29 +34,39 @@ const Container = styled.div`
 export const Game = () => {
   const [quote, setQuote] = useState<QuoteData>(initialQuote);
   const [userInput, setUserInput] = useState("");
+  const [gameOver, setGameOver] = useState(false);
 
   const hiddenInput = useRef<HTMLInputElement>(null);
+  
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    if (quote.quote === userInput && quote.quote !== "") {
+      setGameOver(true);
+    }
+  }, [userInput])
 
   const fetchData = async () => {
     const result = await getQuote();
     setQuote(result);
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
   const onQuoteClick = () => {
     hiddenInput.current.focus();
   };
 
   const onUserInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUserInput(e.target.value);
+    if (!gameOver) {
+      setUserInput(e.target.value);
+    }
   };
 
   const newGame = async () => {
     setQuote(initialQuote);
     setUserInput("");
+    setGameOver(false);
     await fetchData();
     hiddenInput.current.focus();
   }
