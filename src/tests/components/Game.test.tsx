@@ -1,14 +1,12 @@
-import { render, waitFor, screen, findByTestId } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { Game } from "../../pages/Game";
-import { Home } from "../../pages/Home";
 import "@testing-library/jest-dom";
-import quotes from "../../mocks/quotes.json";
 import { MemoryRouter } from "react-router-dom";
 
-test("Renders the Heading", () => {
-  render(<Home />, { wrapper: MemoryRouter });
-  const heading = screen.getByText(/Anime Typing Game/i);
-  expect(heading).toBeInTheDocument();
+test("Loads and renders the Quote box", async () => {
+  render(<Game />, { wrapper: MemoryRouter });
+  const quoteBox = await screen.findByTestId("quote-box");
+  expect(quoteBox).toBeInTheDocument();
 });
 
 test("Renders the Play Again button", () => {
@@ -17,7 +15,13 @@ test("Renders the Play Again button", () => {
   expect(button).toBeInTheDocument();
 });
 
-test("Loads and renders the Quote box", async () => {
+test("Renders the result page when the user input is same as quote", async () => {
   render(<Game />, { wrapper: MemoryRouter });
-  expect(true).toBe(true);
-})
+  await waitFor(() => {
+    expect(screen.getByTestId("quote-box")).toBeInTheDocument();
+  })
+  const userInput = screen.getByRole("textbox");
+  fireEvent.change(userInput, {target: {value: "I will be Hokage"}})
+  const results = screen.getByText("You just typed a quote from:");
+  expect(results).toBeInTheDocument();
+});

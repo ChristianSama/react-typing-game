@@ -1,6 +1,5 @@
-import { server } from './src/mocks/server';
 import "whatwg-fetch";
-// import 'isomorphic-fetch'
+import { server } from './src/mocks/server';
 
 beforeAll(() => server.listen())
 afterEach(() => server.resetHandlers())

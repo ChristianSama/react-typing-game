@@ -12,13 +12,24 @@ export const handlers = [
       })
     );
   }),
-  rest.get("/https:\/\/api.jikan.moe\/v4\/characters.*/", (req, res, ctx) => {
-    return res(
-      ctx.status(200),
-      ctx.json({
-        characterImage: quotes[0].characterImage,
-        characterUrl: quotes[0].characterUrl,
-      })
-    );
+  rest.get("https://api.jikan.moe/v4/characters", (req, res, ctx) => {
+    const character = req.url.searchParams.get("q");
+    if (character === "Naruto Uzumaki") {
+      return res(
+        ctx.status(200),
+        ctx.json({
+          data: [
+            {
+              url: quotes[0].characterImage,
+              images: {
+                jpg: {
+                  image_url: quotes[0].characterUrl,
+                },
+              },
+            },
+          ],
+        })
+      );
+    }
   }),
 ];

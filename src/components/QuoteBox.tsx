@@ -47,5 +47,5 @@ export const QuoteBox = (props: {
     return <IncorrectSpan data-testid="letter" key={i}>{char}</IncorrectSpan>;
   });
 
-  return <StyledBox onClick={props.onQuoteClick}>{chars}</StyledBox>;
+  return <StyledBox data-testid="quote-box" onClick={props.onQuoteClick}>{chars}</StyledBox>;
 };
