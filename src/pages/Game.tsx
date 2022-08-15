@@ -5,6 +5,7 @@ import { QuoteBox } from "../components/QuoteBox";
 import { Results } from "../components/Results";
 import styled from "styled-components";
 import { NewGameButton } from "../components/NewGameButton";
+import { secondsToTime } from "../helpers/helpers";
 
 const HiddenInput = styled.input.attrs({
   type: "text",
@@ -31,26 +32,48 @@ const Container = styled.div`
   flex-direction: column;
 `
 
+const Timer = styled.div`
+  text-align: center;
+  font-size: 30px;
+  margin-top: 4rem;
+`
+
 export const Game = () => {
   const [quote, setQuote] = useState<QuoteData>(initialQuote);
   const [userInput, setUserInput] = useState("");
+  const [gameStarted, setGameStarted] = useState(false);
   const [gameOver, setGameOver] = useState(false);
+  const [timer, setTimer] = useState(0);
+  const [timerID, setTimerID] = useState(null);
 
+  const firstGameStartRender = useRef(true);
   const hiddenInput = useRef<HTMLInputElement>(null);
   
   useEffect(() => {
     fetchData();
-  }, []);
+  }, []); //when mounting the component
 
   useEffect(() => {
-    if (quote.quote === userInput && quote.quote !== "") {
+    if (quote.quote === userInput && gameStarted) {
       setGameOver(true);
+      clearInterval(timerID);
     }
-  }, [userInput])
+  }, [userInput]) //on userInput change
+
+  useEffect(() => {
+    if (firstGameStartRender.current) {
+      firstGameStartRender.current = false;
+      return;
+    }
+    if (gameStarted === true) {
+      setTimerID(window.setInterval(() => tick(), 1000))
+    }
+  }, [gameStarted]) //on gameStarted change
 
   const fetchData = async () => {
     const result = await getQuote();
     setQuote(result);
+    setGameStarted(true);
   };
 
   const onQuoteClick = () => {
@@ -63,8 +86,15 @@ export const Game = () => {
     }
   };
 
+  const tick = () => {
+    setTimer(timer => timer + 1)
+  }
+
   const newGame = async () => {
     setQuote(initialQuote);
+    clearInterval(timerID);
+    setTimer(0);
+    setGameStarted(false);
     setUserInput("");
     setGameOver(false);
     await fetchData();
@@ -73,6 +103,7 @@ export const Game = () => {
 
   return (
     <Container>
+      <Timer>{secondsToTime(timer)}</Timer>
       {quote.quote !== "" 
         ? <QuoteBox
           onQuoteClick={onQuoteClick}
@@ -90,7 +121,7 @@ export const Game = () => {
       ></HiddenInput>
       {userInput == quote.quote && quote.quote != "" && (
         <>
-          <Results quote={quote}></Results>
+          <Results quote={quote} timer={timer}></Results>
         </>
       )}
       <NewGameButton newGame={newGame}></NewGameButton>

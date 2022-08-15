@@ -1,7 +1,6 @@
 import { StyledBox } from "../styledComponents/StyledBox";
 import styled from "styled-components";
 import { QuoteData } from "../types/Quote";
-import { QuoteBox } from "./QuoteBox";
 
 const ResultsBox = styled(StyledBox)`
   width: 70%;
@@ -14,10 +13,13 @@ const SubResults = styled.div`
   display: flex;
 `
 const Stats = styled.div`
-  margin: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 `
 
-export const Results = (props: { quote: QuoteData }) => {
+export const Results = (props: { quote: QuoteData, timer: number}) => {
+  const wpm = props.quote.quote.split(" ").length/(props.timer/60)
   return (
     <ResultsBox>
       <div>You just typed a quote from:</div>
@@ -29,6 +31,7 @@ export const Results = (props: { quote: QuoteData }) => {
             Character:
             <a href={props.quote.characterUrl}>{props.quote.character}</a>
           </div>
+          <div>WPM: {Math.ceil(wpm)} </div>
         </Stats>
       </SubResults>
     </ResultsBox>
