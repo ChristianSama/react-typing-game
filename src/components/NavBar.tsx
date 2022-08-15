@@ -1,5 +1,6 @@
-import styled from "styled-components";
+import styled, { ThemeContext } from "styled-components";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
 
 const StyledNavBar = styled.nav`
   display: flex;
@@ -7,6 +8,7 @@ const StyledNavBar = styled.nav`
   align-items: center;
   padding: 0 2rem;
   gap: 2rem;
+  background-color: ${(props) => props.theme.background};
 `;
 const NavList = styled.ul`
   list-style: none;
@@ -16,28 +18,33 @@ const NavList = styled.ul`
 const NavLink = styled(Link)`
   text-decoration: none;
   padding: 0.5rem;
-  color: #404040;
+  color: ${(props) => props.theme.foreground};
   &:hover {
-    color: #ff6153;
+    color: ${(props) => props.theme.secondary};
   }
 `;
 const NavTitle = styled(NavLink)`
   font-size: 20px;
-  color: #ff6153;
+  color: ${(props) => props.theme.secondary};
 `;
 const StyledLink = styled.a`
   text-decoration: none;
   padding: 0.5rem;
-  color: #404040;
+  color: ${(props) => props.theme.foreground};
   &:hover {
-    color: #ff6153;
+    color: ${(props) => props.theme.secondary};
   }
 `;
-export const NavBar = () => {
+
+export const NavBar = (props: { toggleTheme: () => void }) => {
+  const theme = useContext(ThemeContext);
   return (
     <StyledNavBar>
       <NavTitle to="/">Anime Typing Game</NavTitle>
       <NavList>
+        <li>
+          <div onClick={props.toggleTheme}>{theme.name}</div>
+        </li>
         <li>
           <NavLink to="about">About</NavLink>
         </li>
