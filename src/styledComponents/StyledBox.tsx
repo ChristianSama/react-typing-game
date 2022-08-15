@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const StyledBox = styled.div`
   font-size: 20px;
-  width: 50%;
+  width: 30%;
   margin: 3rem auto;
   padding: 1rem;
   color: gray;

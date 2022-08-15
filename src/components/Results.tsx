@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { QuoteData } from "../types/Quote";
 
 const ResultsBox = styled(StyledBox)`
-  width: 70%;
+  max-width: 30%;
 `
 const Image = styled.img`
   width: 25%;  

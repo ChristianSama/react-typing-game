@@ -119,7 +119,7 @@ export const Game = () => {
         value={userInput}
         onChange={onUserInput}
       ></HiddenInput>
-      {userInput == quote.quote && quote.quote != "" && (
+      {gameOver && (
         <>
           <Results quote={quote} timer={timer}></Results>
         </>
