@@ -1,23 +1,23 @@
 import { QuoteData } from "../types/Quote";
 
-export const getQuote = async ():Promise<QuoteData> => {
-  try {
-    //Quote API call
-    const quoteRes = await fetch("https://animechan.vercel.app/api/random");
-    const quote = await quoteRes.json();
+export const getQuote = async (): Promise<QuoteData> => {
+  //Quote API call
+  const quoteRes = await fetch("https://animechan.vercel.app/api/random");
+  const quote = await quoteRes.json();
 
-    //Character API call using quote character
-    const characterRes = await fetch(`https://api.jikan.moe/v4/characters?q=${encodeURIComponent(quote.character)}`);
-    const character = await characterRes.json();
+  //Character API call using quote character
+  const characterRes = await fetch(
+    `https://api.jikan.moe/v4/characters?q=${encodeURIComponent(
+      quote.character
+    )}`
+  );
+  const character = await characterRes.json();
 
-    return {
-      quote: quote.quote,
-      anime: quote.anime,
-      character: quote.character,
-      characterUrl: character.data[0].url,
-      characterImage: character.data[0].images.jpg.image_url
-    }
-  } catch (error) {
-    return getQuote();
-  }
+  return {
+    quote: quote.quote,
+    anime: quote.anime,
+    character: quote.character,
+    characterUrl: character.data[0].url,
+    characterImage: character.data[0].images.jpg.image_url,
+  };
 };
