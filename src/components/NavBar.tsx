@@ -43,6 +43,9 @@ export const NavBar = (props: { toggleTheme: () => void }) => {
       <NavTitle to="/">Anime Typing Game</NavTitle>
       <NavList>
         <li>
+          <NavLink to="register">Register</NavLink>
+        </li>
+        <li>
           <div onClick={props.toggleTheme}>{theme.name}</div>
         </li>
         <li>

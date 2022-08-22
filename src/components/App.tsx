@@ -1,6 +1,7 @@
 import GlobalStyle from "../styledComponents/GlobalStyles";
 import { Home } from "../pages/Home";
 import { About } from "../pages/About";
+import { Register } from "../pages/Register";
 import { Route, Routes } from "react-router-dom";
 import { Game } from "../pages/Game";
 import { NavBar } from "./NavBar";
@@ -30,6 +31,7 @@ const App = () => {
               <Route path="/" element={<Home />} />
               <Route path="/game" element={<Game />} />
               <Route path="/about" element={<About />} />
+              <Route path="/register" element={<Register />} />
             </Routes>
           </ErrorBoundary>
         </>
